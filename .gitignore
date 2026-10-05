@@ -1,0 +1,12 @@
+myenv/
+.venv/
+__pycache__/
+*.pyc 
+*.pyo 
+*.pyd 
+pytest_cache/
+.vscode/
+*.log 
+.ipynb_checkpoints
+catboost_info/
+check.ipynb

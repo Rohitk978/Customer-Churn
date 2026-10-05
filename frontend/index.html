@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Customer Churn Prediction Application">
+    <title>Customer Churn Predictor</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <div class="app-shell">
+
+        <header class="topbar">
+            <div class="brand">
+                <div class="brand-mark">CC</div>
+                <div>
+                    <h1>Customer Churn Predictor</h1>
+                    <p>AI-powered customer retention analysis</p>
+                </div>
+            </div>
+            <div class="api-status" id="apiStatus">
+                <span class="status-dot"></span>
+                <span id="statusText">Checking API...</span>
+            </div>
+        </header>
+
+        <main>
+            <section class="hero">
+                <div class="hero-copy">
+                    <span class="eyebrow">PREDICT • ANALYZE • RETAIN</span>
+                    <h2>Will this customer <span>churn?</span></h2>
+                    <p>
+                        Enter customer information below. The application sends your
+                        live input to the trained XGBoost prediction pipeline and
+                        returns a churn prediction with probability.
+                    </p>
+                </div>
+                <div class="hero-card">
+                    <div class="hero-icon">↗</div>
+                    <strong>Real-time prediction</strong>
+                    <span>Powered by your trained ML pipeline</span>
+                </div>
+            </section>
+
+            <form id="predictionForm" novalidate>
+
+                <section class="form-section">
+                    <div class="section-heading">
+                        <div class="section-number">01</div>
+                        <div>
+                            <h3>Customer Profile</h3>
+                            <p>Basic customer information</p>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="field">
+                            <label for="gender">Gender</label>
+                            <select id="gender" name="gender" required>
+                                <option value="Male" selected>Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="partner">Partner</label>
+                            <select id="partner" name="partner" required>
+                                <option value="Yes" selected>Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="dependents">Dependents</label>
+                            <select id="dependents" name="dependents" required>
+                                <option value="No" selected>No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="form-section">
+                    <div class="section-heading">
+                        <div class="section-number">02</div>
+                        <div>
+                            <h3>Phone & Internet Services</h3>
+                            <p>Services currently subscribed to</p>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="field">
+                            <label for="phoneservice">Phone Service</label>
+                            <select id="phoneservice" name="phoneservice" required>
+                                <option value="Yes" selected>Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="multiplelines">Multiple Lines</label>
+                            <select id="multiplelines" name="multiplelines" required>
+                                <option value="No" selected>No</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No phone service">No phone service</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="internetservice">Internet Service</label>
+                            <select id="internetservice" name="internetservice" required>
+                                <option value="DSL" selected>DSL</option>
+                                <option value="Fiber optic">Fiber optic</option>
+                                <option value="No">No internet service</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="form-section">
+                    <div class="section-heading">
+                        <div class="section-number">03</div>
+                        <div>
+                            <h3>Security & Support</h3>
+                            <p>Protection and technical assistance services</p>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="field">
+                            <label for="onlinesecurity">Online Security</label>
+                            <select id="onlinesecurity" name="onlinesecurity" required>
+                                <option value="No" selected>No</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No internet service">No internet service</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="onlinebackup">Online Backup</label>
+                            <select id="onlinebackup" name="onlinebackup" required>
+                                <option value="No" selected>No</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No internet service">No internet service</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="deviceprotection">Device Protection</label>
+                            <select id="deviceprotection" name="deviceprotection" required>
+                                <option value="No" selected>No</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No internet service">No internet service</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="techsupport">Tech Support</label>
+                            <select id="techsupport" name="techsupport" required>
+                                <option value="No" selected>No</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No internet service">No internet service</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="form-section">
+                    <div class="section-heading">
+                        <div class="section-number">04</div>
+                        <div>
+                            <h3>Entertainment Services</h3>
+                            <p>Streaming products associated with the account</p>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="field">
+                            <label for="streamingtv">Streaming TV</label>
+                            <select id="streamingtv" name="streamingtv" required>
+                                <option value="No" selected>No</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No internet service">No internet service</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="streamingmovies">Streaming Movies</label>
+                            <select id="streamingmovies" name="streamingmovies" required>
+                                <option value="No" selected>No</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No internet service">No internet service</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="form-section">
+                    <div class="section-heading">
+                        <div class="section-number">05</div>
+                        <div>
+                            <h3>Billing & Contract</h3>
+                            <p>Account and payment preferences</p>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="field">
+                            <label for="contract">Contract</label>
+                            <select id="contract" name="contract" required>
+                                <option value="Month-to-month" selected>Month-to-month</option>
+                                <option value="One year">One year</option>
+                                <option value="Two year">Two year</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="paperlessbilling">Paperless Billing</label>
+                            <select id="paperlessbilling" name="paperlessbilling" required>
+                                <option value="Yes" selected>Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="paymentmethod">Payment Method</label>
+                            <select id="paymentmethod" name="paymentmethod" required>
+                                <option value="Electronic check" selected>Electronic check</option>
+                                <option value="Mailed check">Mailed check</option>
+                                <option value="Bank transfer (automatic)">Bank transfer (automatic)</option>
+                                <option value="Credit card (automatic)">Credit card (automatic)</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="form-section">
+                    <div class="section-heading">
+                        <div class="section-number">06</div>
+                        <div>
+                            <h3>Account & Charges</h3>
+                            <p>Use realistic values within the allowed ranges</p>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="field">
+                            <label for="tenure">Tenure <span class="unit">months</span></label>
+                            <input
+                                id="tenure"
+                                name="tenure"
+                                type="number"
+                                min="0"
+                                max="72"
+                                step="1"
+                                value="10"
+                                required
+                            >
+                            <small>Allowed range: 0–72 months</small>
+                        </div>
+
+                        <div class="field">
+                            <label for="monthlycharges">Monthly Charges <span class="unit">₹ / month</span></label>
+                            <input
+                                id="monthlycharges"
+                                name="monthlycharges"
+                                type="number"
+                                min="0"
+                                max="150"
+                                step="0.01"
+                                value="80.50"
+                                required
+                            >
+                            <small>Allowed range: 0–150</small>
+                        </div>
+
+                        <div class="field">
+                            <label for="totalcharges">Total Charges <span class="unit">₹</span></label>
+                            <input
+                                id="totalcharges"
+                                name="totalcharges"
+                                type="number"
+                                min="0"
+                                max="10000"
+                                step="0.01"
+                                value="850.00"
+                                required
+                            >
+                            <small>Allowed range: 0–10,000</small>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="action-area">
+                    <button type="button" class="secondary-button" id="resetButton">
+                        Reset
+                    </button>
+                    <button type="submit" class="predict-button" id="predictButton">
+                        <span class="button-text">Predict Customer Churn</span>
+                        <span class="button-loader" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </form>
+
+            <section class="result-card hidden" id="resultCard" aria-live="polite">
+                <div class="result-header">
+                    <div>
+                        <span class="eyebrow">PREDICTION RESULT</span>
+                        <h3 id="resultTitle">Prediction</h3>
+                    </div>
+                    <div class="result-badge" id="resultBadge">—</div>
+                </div>
+
+                <div class="result-body">
+                    <div class="probability-block">
+                        <div class="probability-value" id="probabilityValue">0%</div>
+                        <div class="probability-label">Churn probability</div>
+                        <div class="progress-track">
+                            <div class="progress-bar" id="progressBar"></div>
+                        </div>
+                    </div>
+
+                    <div class="result-message" id="resultMessage">
+                        Waiting for prediction...
+                    </div>
+                </div>
+            </section>
+
+            <div class="error-card hidden" id="errorCard" role="alert">
+                <strong>Prediction could not be completed.</strong>
+                <span id="errorMessage"></span>
+            </div>
+        </main>
+
+        <footer>
+            <span>Customer Churn Prediction</span>
+            <span>FastAPI • XGBoost • Machine Learning</span>
+        </footer>
+    </div>
+
+    <script src="/static/script.js"></script>

@@ -1,0 +1,14 @@
+data:
+  train_path: "data/train.csv"
+  test_path: "data/test.csv"
+  target_column: "churn"
+  id_column: "customerid"
+
+artifacts:
+  preprocessor_path: "preprocessor.pkl"
+
+models:
+  tuned_model_dir: "tunemodels/"
+  xgboost_model_path: "tunemodels/xgboost.pkl"
+
+
