@@ -91,12 +91,7 @@ class ModelTuning:
 
 
     
-    def objective_logistic_regression(
-            self,
-            trial,
-            X_train,
-            y_train
-    ):
+    def objective_logistic_regression(self,trial,X_train,y_train):
 
         C = trial.suggest_float(
             "C",
@@ -128,12 +123,7 @@ class ModelTuning:
 
         return score
 
-    def tune_logistic_regression(
-            self,
-            X_train,
-            y_train,
-            n_trials=20
-    ):
+    def tune_logistic_regression(self,X_train,y_train,n_trials=20):
 
         logging.info(
             "Starting Logistic Regression tuning"
@@ -167,12 +157,7 @@ class ModelTuning:
 
     # DECISION TREE
 
-    def objective_decision_tree(
-            self,
-            trial,
-            X_train,
-            y_train
-    ):
+    def objective_decision_tree(self,trial,X_train,y_train):
 
         criterion = trial.suggest_categorical(
             "criterion",
@@ -216,12 +201,7 @@ class ModelTuning:
 
         return score
 
-    def tune_decision_tree(
-            self,
-            X_train,
-            y_train,
-            n_trials=20
-    ):
+    def tune_decision_tree(self,X_train,y_train,n_trials=20):
 
         logging.info(
             "Starting Decision Tree tuning"
@@ -255,12 +235,7 @@ class ModelTuning:
 
     # SVM
 
-    def objective_svm(
-            self,
-            trial,
-            X_train,
-            y_train
-    ):
+    def objective_svm(self,trial,X_train,y_train):
 
         C = trial.suggest_float(
             "C",
@@ -301,12 +276,7 @@ class ModelTuning:
 
         return score
 
-    def tune_svm(
-            self,
-            X_train,
-            y_train,
-            n_trials=20
-    ):
+    def tune_svm(self,X_train,y_train,n_trials=20):
 
         logging.info(
             "Starting SVM tuning"
@@ -340,12 +310,7 @@ class ModelTuning:
 
     # RANDOM FOREST
 
-    def objective_random_forest(
-            self,
-            trial,
-            X_train,
-            y_train
-    ):
+    def objective_random_forest(self,trial,X_train,y_train):
 
         n_estimators = trial.suggest_int(
             "n_estimators",
@@ -406,12 +371,7 @@ class ModelTuning:
 
         return score
 
-    def tune_random_forest(
-            self,
-            X_train,
-            y_train,
-            n_trials=20
-    ):
+    def tune_random_forest(self,X_train,y_train,n_trials=20):
 
         logging.info(
             "Starting Random Forest tuning"
@@ -445,12 +405,7 @@ class ModelTuning:
 
     # XGBOOST
 
-    def objective_xgboost(
-            self,
-            trial,
-            X_train,
-            y_train
-    ):
+    def objective_xgboost(self,trial,X_train,y_train):
 
         n_estimators = trial.suggest_int(
             "n_estimators",
@@ -532,12 +487,7 @@ class ModelTuning:
 
         return score
 
-    def tune_xgboost(
-            self,
-            X_train,
-            y_train,
-            n_trials=50
-    ):
+    def tune_xgboost(self,X_train,y_train,n_trials=50):
 
         logging.info(
             "Starting XGBoost tuning"
@@ -571,12 +521,7 @@ class ModelTuning:
 
     # LIGHTGBM
 
-    def objective_lightgbm(
-            self,
-            trial,
-            X_train,
-            y_train
-    ):
+    def objective_lightgbm(self,trial,X_train,y_train):
 
         n_estimators = trial.suggest_int(
             "n_estimators",
@@ -658,12 +603,7 @@ class ModelTuning:
 
         return score
 
-    def tune_lightgbm(
-            self,
-            X_train,
-            y_train,
-            n_trials=50
-    ):
+    def tune_lightgbm(self,X_train,y_train,n_trials=50):
 
         logging.info(
             "Starting LightGBM tuning"
@@ -697,12 +637,7 @@ class ModelTuning:
 
     # CATBOOST
 
-    def objective_catboost(
-            self,
-            trial,
-            X_train,
-            y_train
-    ):
+    def objective_catboost(self,trial,X_train,y_train):
 
         iterations = trial.suggest_int(
             "iterations",
@@ -753,12 +688,7 @@ class ModelTuning:
 
         return score
 
-    def tune_catboost(
-            self,
-            X_train,
-            y_train,
-            n_trials=50
-    ):
+    def tune_catboost(self,X_train,y_train,n_trials=50):
 
         logging.info(
             "Starting CatBoost tuning"
@@ -881,12 +811,7 @@ class ModelTuning:
             )
 
 
-    def tune_all_models(
-            self,
-            X_train,
-            y_train,
-            n_trials=20
-         ):
+    def tune_all_models(self,X_train,y_train,n_trials=20):
 
         try:
 
